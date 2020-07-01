@@ -28,7 +28,7 @@
                     <input type="button" class="btn btn-info" value="Tải xuống excel">
                 </div>
                 <div class="col-sm-2">
-                    <input type="button" class="btn btn-success" value="Hiển thị kết quả">
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" onclick="ResultsFunction()">Hiển thị kết quả</button>
                 </div>
             </div>
             <div class="row">
@@ -62,6 +62,32 @@
 
 
     </main>
+    <!--Modal for results-->
+    <div>
+        <div class="container">
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog modal-lg">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">KẾT QUẢ</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="textResult">Some text in the modal.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
     <footer></footer>
     <script src="./main.js"></script>
     <script src="./other_js/transition_web.js"></script>
