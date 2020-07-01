@@ -21,17 +21,39 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <input type="button" class="btn btn-info" value="Tải lên excel">
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-4">
                     <input type="button" class="btn btn-info" value="Tải xuống excel">
                 </div>
                 <div class="col-sm-2">
                     <input type="button" class="btn btn-success" value="Hiển thị kết quả">
                 </div>
             </div>
-            <div class="row"></div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <br>
+                    <h3 style="color: #ecf0f1; display: inline;">Lựa chọn loại nước thải cần xử lý:</h3>
+                    <a href="#" data-toggle="tooltip" data-placement="right" title="Hãy dựa vào những thông tin thu thập được, xác định loại nước thải cần xử lý là gì? (nếu không chắc chắn về loại nước thải, hãy chọn Nước thải khác)" style="color: #f1c40f; text-decoration: none;">Gợi ý?</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-11">
+                    <br>
+                    <div class="dropdown dropright">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                        <span id="selected-chooseTypeOfWasteWater">Chọn một trong những loại sau đây...</span>
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu" id="dropdown-menu-chooseTypeOfWasteWater">
+                            <li><a href="#">Nước thải sinh hoạt</a></li>
+                            <li><a href="#">Nước thải thủy sản</a></li>
+                            <li><a href="#">Nước thải khác</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -42,6 +64,7 @@
     </main>
     <footer></footer>
     <script src="./main.js"></script>
+    <script src="./other_js/transition_web.js"></script>
 </body>
 
 </html>
