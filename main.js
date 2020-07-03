@@ -24,7 +24,7 @@ var ExcelToJSON = function() {
                 var XL_row_object = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
                 var json_object = JSON.stringify(XL_row_object);
                 dataJsonGetFromExcel = JSON.parse(json_object);
-                //console.log(dataJsonGetFromExcel);
+                console.log(dataJsonGetFromExcel);
                 InputKeyAndValueIntoLocalStorage();
                 PushAllDataFromExcel();
                 //jQuery('#xlx_json').val(json_object);
@@ -213,6 +213,25 @@ function CalAllThingInWebSite() {
                 localStorage.setItem(numbersKeyInLocalStorage[i], textChange);
             }
         }
+        alert("Lưu thành công!");
     }
     PushDataToLocalStorage();
+}
+
+//create new variable into local Storage for new user
+if (Object.keys(localStorage).length === 0) {
+    dataJsonGetFromExcel = [{
+            "Attribute": "Loại nước thải",
+            "Unit": "-",
+            "Result": "Nước thải công nghiệp giấy",
+            "ID": "a0_loaiNuocThaiXuLy_txt"
+        },
+        {
+            "Attribute": "Lưu lượng xử lý mỗi ngày",
+            "Unit": "m3/ngày",
+            "Result": "750",
+            "ID": "a1_luuLuongXuLy_inptxt"
+        }
+    ];
+    InputKeyAndValueIntoLocalStorage();
 }
