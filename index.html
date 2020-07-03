@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Trang chủ</title>
     <!-- library of bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+    <script src="./other_js/FileSaver.js"></script>
+    <script src="./other_js/jhxlsx.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.4/xlsx.core.min.js"></script>
+
     <!--add link to the others file in project-->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -16,52 +22,76 @@
     <header></header>
     <main>
         <div class="container">
-            <h1 style="color: #ecf0f1;">Tính toán, thiết kế hệ thống XLNT</h1>
-            <br>
+            <div class="page-header" style="color: #2ecc71; text-align: center;">
+                <h1>TÍNH TOÁN, THIẾT KẾ HỆ THỐNG XỬ LÝ NƯỚC THẢI</h1>
+            </div>
         </div>
         <div class="container">
             <div class="row">
+                <br>
                 <div class="col-sm-3">
-                    <input type="button" class="btn btn-info" value="Tải lên excel">
+                    <label class="btn btn-info" style="width: 100%;">
+                        Tải lên Excel <input type="file" id="uploadExcelFile" name="uploadExcelFile" accept=".xlsx" onclick="this.value=null;">
+                    </label>
                 </div>
-                <div class="col-sm-4">
-                    <input type="button" class="btn btn-info" value="Tải xuống excel">
+                <div class="col-sm-3">
+                    <input type="button" class="btn btn-info" value="Tải xuống excel" style="width: 100%;" onclick="GetDataFromLocalStorageAndSaveToExcelFile()">
                 </div>
+                <div class="col-sm-2"></div>
                 <div class="col-sm-2">
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" onclick="ResultsFunction()">Hiển thị kết quả</button>
                 </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-primary" onclick="CalAllThingInWebSite()">Tính toán</button>
+                </div>
             </div>
             <div class="row">
+                <br>
                 <div class="col-sm-12">
-                    <br>
-                    <h3 style="color: #ecf0f1; display: inline;">Lựa chọn loại nước thải cần xử lý:</h3>
+                    <h4 style="color: #ecf0f1; display: inline;">Lựa chọn loại nước thải cần xử lý</h4>
                     <a href="#" data-toggle="tooltip" data-placement="right" title="Hãy dựa vào những thông tin thu thập được, xác định loại nước thải cần xử lý là gì? (nếu không chắc chắn về loại nước thải, hãy chọn Nước thải khác)" style="color: #f1c40f; text-decoration: none;">Gợi ý?</a>
                 </div>
             </div>
             <div class="row">
+                <br>
                 <div class="col-sm-1"></div>
                 <div class="col-sm-5">
-                    <br>
+
                     <div class="dropdown dropright">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width: 100%">
-                        <span id="selected-chooseTypeOfWasteWater">Chọn một trong những loại sau đây...</span>
+                        <span id="a0_loaiNuocThaiXuLy_txt">Chọn một trong những loại sau đây...</span>
                         <span class="caret"></span></button>
                         <ul class="dropdown-menu" id="dropdown-menu-chooseTypeOfWasteWater">
                             <li><a href="#">Nước thải sinh hoạt</a></li>
                             <li><a href="#">Nước thải thủy sản</a></li>
+                            <li><a href="#">Nước thải y tế</a></li>
+                            <li><a href="#">Nước thải dệt nhuộm</a></li>
+                            <li><a href="#">Nước thải lò giết mổ</a></li>
+                            <li><a href="#">Nước thải hóa chất</a></li>
+                            <li><a href="#">Nước thải công nghiệp</a></li>
                             <li><a href="#">Nước thải khác</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <br>
+                <div class="col-sm-3">
+                    <h4 style="color: #ecf0f1; display: inline;">Tổng lưu lượng xử lý</h4>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="a1_luuLuongXuLy_inptxt">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <span>m<sup>3</sup>/ngày.đêm</span>
+                    <a href="#" data-toggle="tooltip" data-placement="right" title="Đây là lưu lượng tối đa mà nhà máy xả thải mỗi ngày" style="color: #f1c40f; text-decoration: none;">Gợi ý?</a>
+                </div>
+            </div>
         </div>
-
-
-
-
-
-
     </main>
+
     <!--Modal for results-->
     <div>
         <div class="container">
@@ -79,15 +109,15 @@
                             <p id="textResult">Some text in the modal.</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
+
+
     <footer></footer>
     <script src="./main.js"></script>
     <script src="./other_js/transition_web.js"></script>
